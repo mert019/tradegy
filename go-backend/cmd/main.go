@@ -18,6 +18,8 @@ import (
 	"os"
 	"strconv"
 
+	"github.com/gorilla/handlers"
+
 	"github.com/gorilla/mux"
 	"github.com/joho/godotenv"
 )
@@ -91,6 +93,11 @@ func init() {
 }
 
 func main() {
+	headers := handlers.AllowedHeaders([]string{"X-Requested-With", "Content-Type", "Authorization"})
+	methods := handlers.AllowedMethods([]string{"GET", "POST", "PUT", "DELETE", "PATCH"})
+	origins := handlers.AllowedOrigins([]string{"*"})
+	credentials := handlers.AllowCredentials()
+
 	log.Printf("Starting on port %s\n", os.Getenv(config.SERVER_PORT))
-	log.Fatalln(http.ListenAndServe(":"+os.Getenv(config.SERVER_PORT), router))
+	log.Fatalln(http.ListenAndServe(":"+os.Getenv(config.SERVER_PORT), handlers.CORS(headers, methods, origins, credentials)(router)))
 }
