@@ -1,31 +1,35 @@
-const register =  async function RegisterService(username, password) {
+import ApiService from "./ApiService";
 
-    var myHeaders = new Headers();
-    myHeaders.append("Content-Type", "application/json");
 
-    var raw = JSON.stringify({
-        "username": username,
-        "password": password
-    });
+class RegisterService extends ApiService {
 
-    var requestOptions = {
-        method: 'POST',
-        headers: myHeaders,
-        body: raw,
-        redirect: 'follow'
-    };
+    constructor() {
+        super();
+    }
 
-    try {
-        const url = process.env.REACT_APP_API_URL + "/api/v1/user/register";
-        const response = await fetch(url, requestOptions);
-        return await response.json();
-    } catch (error) {
-        return null;
+
+    async register(username, password) {
+
+        var myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+
+        var raw = JSON.stringify({
+            "username": username,
+            "password": password
+        });
+
+        var requestOptions = {
+            method: 'POST',
+            headers: myHeaders,
+            body: raw,
+            redirect: 'follow'
+        };
+
+        const url = this.getBaseApiUrl() + "/api/v1/user/register";
+        
+        return await this.sendApiRequest(url, requestOptions);
     }
 }
 
-const RegisterService = {
-    register: register,
-}
 
 export default RegisterService;

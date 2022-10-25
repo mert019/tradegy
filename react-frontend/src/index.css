@@ -1,4 +1,29 @@
-input:focus{
-    box-shadow: 0 0 10px #5cb85c !important;
-    border-color: #5cb85c !important;
+input:focus {
+  box-shadow: 0 0 10px #5cb85c !important;
+  border-color: #5cb85c !important;
+}
+
+/* 
+#pie {
+    height: 440px;
+  } */
+
+#pie * {
+  margin: 0 auto;
+}
+
+
+.small-asset-img {
+  display: inline-block;
+  padding: 0;
+  margin: 0;
+  width: 30px;
+  height: 30px;
+  font-size: 24px;
+  line-height: 30px;
+  color: #fff;
+  text-align: center;
+  background-color: #009900;
+  border-radius: 50%;
+  border: 1px solid #000;
 }

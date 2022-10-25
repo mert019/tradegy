@@ -15,6 +15,8 @@ import { store, persistor } from './states/configureStore';
 import LoginPage from './pages/LoginPage';
 import MainPage from './pages/MainPage';
 import RegisterPage from './pages/RegisterPage';
+import ProfilePage from './pages/ProfilePage';
+import CreateOrderPage from './pages/CreateOrderPage';
 
 // ALERT
 import { Provider as AlertProvider } from '@blaumaus/react-alert'
@@ -22,10 +24,13 @@ import { Provider as AlertProvider } from '@blaumaus/react-alert'
 // COMPONENTS
 import Alert, { alertOptions } from './components/Alert';
 import AnonymousRoute from './components/authComponents/AnonymousRoute';
+import ProtectedRoute from './components/authComponents/ProtectedRoute';
 
+// CSS
 import './index.css';
+import 'devextreme/dist/css/dx.light.css';
+
 import App from './App';
-import ProtectedRoute from './components/authComponents/AnonymousRoute';
 
 
 
@@ -51,6 +56,8 @@ root.render(
               </Route>
 
               <Route path="/" element={<ProtectedRoute />} >
+                <Route path="profile" element={<ProfilePage />} />
+                <Route path="createorder" element={<CreateOrderPage />} />
                 <Route path="*" element={<p>404 PAGE</p>} />
               </Route>
 

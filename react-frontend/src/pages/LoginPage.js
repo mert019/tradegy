@@ -20,30 +20,44 @@ const LoginPage = () => {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const alert = useAlert()
+  const alert = useAlert();
+
+  const authService = new AuthService();
+
 
   const loginHandler = async (e) => {
     e.preventDefault();
+
     // Validate input
     if (username.length === 0 || password.length === 0) {
       alert.error("Please enter a username and password.")
       return;
     }
+
     // Call login service
-    let response = await AuthService.login(username, password);
+    let response = await authService.login(username, password);
+
+    // Error
     if (response === null) {
-      alert.error("Error on login service. Please try a few minites later.");
-      return;
+      alert.error("Ooops something went wrong.")
     }
-    // Response actions
-    if (200 <= response.Status && response.Status <= 299) {
+
+    // Success
+    else if (200 <= response.Status && response.Status <= 299) {
       dispatch(setToken(response.Payload.Token));
       alert.success(response.Message);
       navigate("/");
-    } else {
-      alert.error(response.Message);
     }
+
+    // Error
+    else {
+      if (response.Message.length > 0) {
+        alert.error(response.Message)
+      }
+    }
+
   }
+
 
   const inputHandler = (e) => {
     let targetID = e.target.id;
@@ -56,6 +70,7 @@ const LoginPage = () => {
         break;
     }
   }
+
 
   return (
     <div id="login" className="mb-5">
@@ -85,5 +100,6 @@ const LoginPage = () => {
     </div>
   )
 }
+
 
 export default LoginPage;

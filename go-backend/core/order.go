@@ -8,6 +8,7 @@ import (
 	dbmodels "go-backend/models/dbmodels"
 	"go-backend/models/enums"
 	"go-backend/models/requestmodels"
+	"go-backend/models/responsemodels"
 	"go-backend/utils"
 	"log"
 	"time"
@@ -68,6 +69,24 @@ func (om *OrderManager) CreateOrder(orderReq requestmodels.CreateOrderRequest, u
 	order.SellAmount = orderReq.Amount
 
 	return om.orderRepository.CreateOrder(order)
+}
+
+func (om *OrderManager) CreateOrderInfo(userId uint64) responsemodels.CreateOrderInfoResponse {
+
+	retVal := responsemodels.CreateOrderInfoResponse{}
+
+	assets := om.assetRepository.GetAll()
+	retVal.BuyAssets = assets
+
+	sellAssets := om.orderRepository.GetSellableAssetsByUserId(userId)
+	retVal.SellAssets = sellAssets
+
+	return retVal
+}
+
+func (om *OrderManager) GetAllHistory(userId uint) []dbmodels.Order {
+
+	return om.orderRepository.GetOrdersByUserId(userId)
 }
 
 func (om *OrderManager) ExecuteMarketOrderBuyOrders() {

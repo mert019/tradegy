@@ -15,6 +15,7 @@ CREATE TABLE IF NOT EXISTS public.assets
     name character varying(255) COLLATE pg_catalog."default",
     code text COLLATE pg_catalog."default",
     api_id text COLLATE pg_catalog."default",
+    image_source text COLLATE pg_catalog."default",
     type_id bigint,
     CONSTRAINT assets_pkey PRIMARY KEY (id),
     CONSTRAINT fk_assets_type FOREIGN KEY (type_id)

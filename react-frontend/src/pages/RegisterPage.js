@@ -16,7 +16,11 @@ const RegisterPage = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
 
   const navigate = useNavigate();
+
   const alert = useAlert()
+
+  const registerService = new RegisterService();
+
 
   const inputHandler = (e) => {
     let targetID = e.target.id;
@@ -33,8 +37,10 @@ const RegisterPage = () => {
     }
   }
 
+
   const registerHandler = async (e) => {
     e.preventDefault();
+
     // Validate input
     if (username.length === 0 || password.length === 0) {
       alert.error("Please enter a username and password.")
@@ -42,21 +48,32 @@ const RegisterPage = () => {
     }
     if(password !== confirmPassword){
       alert.error("Passwords does not match.")
-    }
-    // Call register service
-    let response = await RegisterService.register(username, password);
-    if (response === null) {
-      alert.error("Error on register service. Please try a few minites later.");
       return;
     }
-    // Response actions
-    if (200 <= response.Status && response.Status <= 299) {
+
+    // Call register service
+    let response = await registerService.register(username, password);
+    
+    // Error
+    if (response === null) {
+      alert.error("Ooops something went wrong.")
+    }
+    
+    // Success
+    else if(200 <= response.Status && response.Status <= 299){
       alert.success(response.Message);
       navigate("/login");
-    } else {
-      alert.error(response.Message);
     }
+
+    // Error
+    else {
+      if(response.Message.length > 0){
+        alert.error(response.Message)
+      }
+    }
+
   }
+
 
   return (
     <div id="register" className="mb-5">
@@ -90,5 +107,6 @@ const RegisterPage = () => {
     </div>
   )
 }
+
 
 export default RegisterPage;

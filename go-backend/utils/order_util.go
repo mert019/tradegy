@@ -39,6 +39,10 @@ func GetConversionRate(cache cache.ICache, buyAsset dbmodels.Asset, sellAsset db
 	var buyAssetData coingecko.CryptocurrencyLatestInfoResponse
 	var sellAssetData coingecko.CryptocurrencyLatestInfoResponse
 
+	if buyAsset.ID == enums.USD && sellAsset.ID == enums.USD {
+		return 1.0, nil
+	}
+
 	if buyAsset.ID != enums.USD {
 		buyAssetInfo, buyInfoErr := cache.Get(ctx, cacheKeys.LATEST_CRYPTOCURRENCY_INFO_PREFIX+buyAsset.ApiId)
 		if buyInfoErr != nil {

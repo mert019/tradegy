@@ -2,6 +2,7 @@ package auth
 
 import (
 	"errors"
+	"fmt"
 	"go-backend/controllers/response"
 	"go-backend/interfaces/ports/database"
 	requestmodels "go-backend/models/requestmodels"
@@ -62,7 +63,7 @@ func (jwtauth *JWTAuth) Authenticate() http.HandlerFunc {
 			return
 		} else {
 			// Create token.
-			token, err := utils.GetToken(user.UserName)
+			token, err := utils.GetToken(user.UserName, user.ID)
 			if err != nil {
 				response.JSON(w, http.StatusInternalServerError, "Ooops, something went wrong.", nil)
 			} else {
@@ -91,7 +92,9 @@ func (jwtauth *JWTAuth) AuthMiddleware(next http.Handler) http.Handler {
 		}
 		//Pass jwt parameters.
 		username := claims.(jwt.MapClaims)["username"].(string)
+		userID := claims.(jwt.MapClaims)["user_id"].(float64)
 		r.Header.Set("username", username)
+		r.Header.Set("user_id", fmt.Sprintf("%v", userID))
 
 		next.ServeHTTP(w, r)
 	})

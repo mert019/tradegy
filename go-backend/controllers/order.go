@@ -8,6 +8,7 @@ import (
 	"go-backend/utils"
 	"log"
 	"net/http"
+	"strconv"
 
 	"github.com/gorilla/mux"
 )
@@ -28,10 +29,6 @@ func (oc *OrderController) CreateOrder() http.HandlerFunc {
 
 		// Get username.
 		username := r.Header.Get("username")
-		if len(username) == 0 {
-			response.JSON(w, http.StatusBadRequest, "Username should be provided.", nil)
-			return
-		}
 
 		// Get json.
 		var model requestmodels.CreateOrderRequest
@@ -60,8 +57,47 @@ func (oc *OrderController) CreateOrder() http.HandlerFunc {
 	}
 }
 
+func (oc *OrderController) CreateOrderInfo() http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+
+		// Get user_id
+		userIDstr := r.Header.Get("user_id")
+		userId, parseErr := strconv.ParseUint(userIDstr, 10, 32)
+		if parseErr != nil {
+			response.JSON(w, http.StatusInternalServerError, "Ooops, something went wrong.", nil)
+			return
+		}
+
+		// Get Info
+		info := oc.orderManager.CreateOrderInfo(userId)
+
+		// Response.
+		response.JSON(w, http.StatusOK, "", info)
+	}
+}
+
+func (oc *OrderController) GetAllHistory() http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+
+		// Get user_id
+		userIDstr := r.Header.Get("user_id")
+		userId, parseErr := strconv.ParseUint(userIDstr, 10, 32)
+		if parseErr != nil {
+			response.JSON(w, http.StatusInternalServerError, "Ooops, something went wrong.", nil)
+			return
+		}
+
+		// Get history
+		history := oc.orderManager.GetAllHistory(uint(userId))
+		response.JSON(w, http.StatusOK, "", history)
+
+	}
+}
+
 func (oc *OrderController) RegisterRoutes(router *mux.Router) {
 	subRouter := router.PathPrefix("/api/v1/order").Subrouter()
 	subRouter.Use(oc.authMiddleware.AuthMiddleware)
 	subRouter.Methods(http.MethodPost).Path("/create").Handler(oc.CreateOrder())
+	subRouter.Methods(http.MethodGet).Path("/createinfo").Handler(oc.CreateOrderInfo())
+	subRouter.Methods(http.MethodGet).Path("/allhistory").Handler(oc.GetAllHistory())
 }

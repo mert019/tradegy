@@ -9,4 +9,5 @@ import (
 type IOrderController interface {
 	RegisterRoutes(router *mux.Router)
 	CreateOrder() http.HandlerFunc
+	GetAllHistory() http.HandlerFunc
 }

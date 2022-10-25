@@ -10,10 +10,11 @@ import (
 	"golang.org/x/crypto/bcrypt"
 )
 
-func GetToken(username string) (string, error) {
+func GetToken(username string, userID uint) (string, error) {
 	signingKey := []byte(os.Getenv(config.JWT_SECRET))
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
 		"username": username,
+		"user_id":  userID,
 		"exp":      time.Now().Add(1 * time.Hour).Unix(),
 	})
 	tokenString, err := token.SignedString(signingKey)

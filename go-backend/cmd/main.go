@@ -32,12 +32,14 @@ var cacheObj cacheInterface.ICache
 // Controllers
 var userController httpapi.IUserController
 var orderController httpapi.IOrderController
+var assetController httpapi.IAssetController
 
 var jwtauth *auth.JWTAuth
 
 // Managers
 var userManager coreInterfaces.IUserManager
 var orderManager coreInterfaces.IOrderManager
+var assetManager coreInterfaces.IAssetManager
 
 // Repositories
 var userRepository databaseInterface.IUserRepository
@@ -72,16 +74,19 @@ func init() {
 	// Initialize Managers
 	userManager = core.NewUserManager(userRepository, orderRepository)
 	orderManager = core.NewOrderManager(userRepository, orderRepository, assetRepository, cacheObj)
+	assetManager = core.NewAssetManager(orderRepository, cacheObj, assetRepository)
 
 	// Initialize Controllers
 	jwtauth = auth.NewJWTAuth(userRepository)
 	userController = controllers.NewUserController(userManager)
 	orderController = controllers.NewOrderController(orderManager, *jwtauth)
+	assetController = controllers.NewAssetController(assetManager, *jwtauth)
 
 	// Register Routes
 	jwtauth.AddRoute(router)
 	userController.RegisterRoutes(router)
 	orderController.RegisterRoutes(router)
+	assetController.RegisterRoutes(router)
 
 	// Initialize and Start Tasks
 	if isTasksEnabled, err := strconv.ParseBool(os.Getenv(config.TASKS_ENABLED)); err != nil {

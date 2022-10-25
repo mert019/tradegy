@@ -7,7 +7,7 @@ import Footer from "../Footer";
 
 
 
-const ProtectedRoute = () => {
+const AnonymousRoute = () => {
 
   const token = useSelector(state => state.token);
 
@@ -20,4 +20,4 @@ const ProtectedRoute = () => {
     <Navigate to="/" replace />)
 }
 
-export default ProtectedRoute;
+export default AnonymousRoute;
