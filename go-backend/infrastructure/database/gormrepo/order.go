@@ -98,3 +98,38 @@ func (o *OrderRepository) GetSellableAssetsByUserId(userId uint64) []responsemod
 	o.DB.Raw(query, sql.Named("userId", userId), sql.Named("orderExecuted", enums.EXECUTED), sql.Named("orderOpen", enums.OPEN)).Scan(&retVal)
 	return retVal
 }
+
+func (o *OrderRepository) GetOrderList(userId uint) []responsemodels.OrderResponse {
+	query := `
+		SELECT 
+			orders.id order_id, 
+			orders.created_at,
+			orders.execution_date_time executed_at,
+			orders.buy_amount, 
+			orders.sell_amount, orders.limit, 
+			ordertype.name order_type, 
+			buyasset.code buy_asset_code, 
+			sellasset.code sell_asset_code,
+			orderstatus.name as order_status
+		
+		FROM 
+			public.orders AS orders
+			INNER JOIN public.enums AS ordertype ON orders.order_type_id = ordertype.code
+			INNER JOIN public.enums AS orderstatus ON orders.order_status_id = orderstatus.code
+			INNER JOIN public.assets AS buyasset ON orders.buy_asset_id = buyasset.id
+			INNER JOIN public.assets as sellasset ON orders.sell_asset_id = sellasset.id
+		
+		WHERE orders.user_id = @userId
+		
+		ORDER BY orders.id DESC`
+
+	var retVal []responsemodels.OrderResponse
+	o.DB.Raw(query, sql.Named("userId", userId)).Scan(&retVal)
+	return retVal
+}
+
+func (o *OrderRepository) GetByID(orderId uint) dbmodels.Order {
+	var result dbmodels.Order
+	o.DB.First(&result, orderId)
+	return result
+}

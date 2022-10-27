@@ -14,4 +14,10 @@ var (
 	ErrInvalidAssetID = errors.New("invalid asset ID")
 
 	ErrInsufficientAssetBalance = errors.New("insufficient asset balance")
+
+	ErrOrderNotFound = errors.New("order not found")
+
+	ErrUnauthorizedAccess = errors.New("unauthorized access")
+
+	ErrOrderCannotBeCancelled = errors.New("order cannot be cancelled")
 )

@@ -13,4 +13,6 @@ type IOrderRepository interface {
 	GetExecutedOrdersByUserId(userId uint) []dbmodels.Order
 	GetSellableAssetsByUserId(userId uint64) []responsemodels.SellAssetsResponse
 	GetOrdersByUserId(userId uint) []dbmodels.Order
+	GetOrderList(userId uint) []responsemodels.OrderResponse
+	GetByID(orderId uint) dbmodels.Order
 }

@@ -89,6 +89,36 @@ func (om *OrderManager) GetAllHistory(userId uint) []dbmodels.Order {
 	return om.orderRepository.GetOrdersByUserId(userId)
 }
 
+func (om *OrderManager) GetOrderList(userId uint) []responsemodels.OrderResponse {
+
+	return om.orderRepository.GetOrderList(userId)
+}
+
+func (om *OrderManager) CancelOrder(userId uint, orderId uint) error {
+
+	// Get order
+	order := om.orderRepository.GetByID(orderId)
+	if order.ID == 0 {
+		return customerrors.ErrOrderNotFound
+	}
+
+	// Check ownership
+	if order.UserID != userId {
+		return customerrors.ErrUnauthorizedAccess
+	}
+
+	// Check status
+	if order.OrderStatusID != enums.OPEN {
+		return customerrors.ErrOrderCannotBeCancelled
+	}
+
+	// Cancel
+	order.OrderStatusID = enums.CANCELLED_BY_USER
+
+	_, updateErr := om.orderRepository.InsertUpdateOrder(order)
+	return updateErr
+}
+
 func (om *OrderManager) ExecuteMarketOrderBuyOrders() {
 	orders := om.orderRepository.GetOpenOrdersByOrderType(enums.MARKET_ORDER_BUY)
 	if len(orders) == 0 {

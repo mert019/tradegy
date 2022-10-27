@@ -10,4 +10,6 @@ type IOrderController interface {
 	RegisterRoutes(router *mux.Router)
 	CreateOrder() http.HandlerFunc
 	GetAllHistory() http.HandlerFunc
+	GetOrderList() http.HandlerFunc
+	CancelOrder() http.HandlerFunc
 }

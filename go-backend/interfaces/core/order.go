@@ -15,4 +15,6 @@ type IOrderManager interface {
 	ExecuteLimitOrderBuyOrders()
 	ExecuteLimitOrderSellOrders()
 	ExecuteStopOrderSellOrders()
+	GetOrderList(userId uint) []responsemodels.OrderResponse
+	CancelOrder(userId uint, orderId uint) error
 }
