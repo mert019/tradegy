@@ -17,6 +17,7 @@ import MainPage from './pages/MainPage';
 import RegisterPage from './pages/RegisterPage';
 import ProfilePage from './pages/ProfilePage';
 import CreateOrderPage from './pages/CreateOrderPage';
+import LeaderboardPage from './pages/LeaderboardPage';
 
 // ALERT
 import { Provider as AlertProvider } from '@blaumaus/react-alert'
@@ -46,6 +47,7 @@ root.render(
               
               <Route path="/" element={<App />} >
                 <Route path="" element={<MainPage />} />
+                <Route path="leaderboard" element={<LeaderboardPage />} />
                 <Route path="*" element={<p>404 PAGE</p>} />
               </Route>
 

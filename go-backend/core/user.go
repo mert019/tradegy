@@ -82,3 +82,7 @@ func (um *UserManager) CreateUser(username string, password string) (dbmodels.Us
 
 	return user, nil
 }
+
+func (um *UserManager) GetAll() []dbmodels.User {
+	return um.userRepository.GetAll()
+}

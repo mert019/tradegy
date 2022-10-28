@@ -26,3 +26,9 @@ func (u *UserRepository) GetUserFromUsername(username string) (dbmodels.User, er
 	err := u.DB.Where(dbmodels.User{UserName: username}).First(&result).Error
 	return result, err
 }
+
+func (u *UserRepository) GetAll() []dbmodels.User {
+	var result []dbmodels.User
+	u.DB.Find(&result)
+	return result
+}

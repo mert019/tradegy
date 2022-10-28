@@ -37,6 +37,9 @@ const Navbar = () => {
             <li className="nav-item">
               <Link to="/" className="nav-link">Home</Link>
             </li>
+            <li className="nav-item">
+              <Link to="/leaderboard" className="nav-link">Leaderboard</Link>
+            </li>
             <ProtectedComponent>
               <li>
                 <Link to="/createorder" className="nav-link">Create Order</Link>

@@ -33,6 +33,7 @@ var cacheObj cacheInterface.ICache
 var userController httpapi.IUserController
 var orderController httpapi.IOrderController
 var assetController httpapi.IAssetController
+var leaderboardController httpapi.ILeaderboardController
 
 var jwtauth *auth.JWTAuth
 
@@ -40,6 +41,7 @@ var jwtauth *auth.JWTAuth
 var userManager coreInterfaces.IUserManager
 var orderManager coreInterfaces.IOrderManager
 var assetManager coreInterfaces.IAssetManager
+var leaderboardManager coreInterfaces.ILeaderbaordManager
 
 // Repositories
 var userRepository databaseInterface.IUserRepository
@@ -75,24 +77,27 @@ func init() {
 	userManager = core.NewUserManager(userRepository, orderRepository)
 	orderManager = core.NewOrderManager(userRepository, orderRepository, assetRepository, cacheObj)
 	assetManager = core.NewAssetManager(orderRepository, cacheObj, assetRepository)
+	leaderboardManager = core.NewLeaderboardManager(cacheObj)
 
 	// Initialize Controllers
 	jwtauth = auth.NewJWTAuth(userRepository)
 	userController = controllers.NewUserController(userManager)
 	orderController = controllers.NewOrderController(orderManager, *jwtauth)
 	assetController = controllers.NewAssetController(assetManager, *jwtauth)
+	leaderboardController = controllers.NewLeaderboardController(leaderboardManager)
 
 	// Register Routes
 	jwtauth.AddRoute(router)
 	userController.RegisterRoutes(router)
 	orderController.RegisterRoutes(router)
 	assetController.RegisterRoutes(router)
+	leaderboardController.RegisterRoutes(router)
 
 	// Initialize and Start Tasks
 	if isTasksEnabled, err := strconv.ParseBool(os.Getenv(config.TASKS_ENABLED)); err != nil {
 		log.Fatalf("Error on TASKS_ENABLED environment variable: %v\n", err)
 	} else if isTasksEnabled {
-		tasks.InitializeTasks(cacheObj, assetRepository, orderManager)
+		tasks.InitializeTasks(cacheObj, assetRepository, orderManager, userManager, assetManager)
 		tasks.Start()
 	}
 }
