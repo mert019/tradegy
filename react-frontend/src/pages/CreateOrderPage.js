@@ -221,7 +221,7 @@ const CreateOrderPage = () => {
                                 </div>
 
                                 {/* LIMIT */}
-                                {!["10001", "10002"].includes(orderType) &&
+                                {!["10001"].includes(orderType) &&
                                     <div className="form-group mt-2 p-2">
                                         <label htmlFor="limit">Limit:</label><br />
                                         <input type="number" name="limit" id="limit" className="form-control" value={limitAmount} onChange={limitAmountChangeHandler}/>

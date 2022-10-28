@@ -3,32 +3,27 @@
 -- Insert Order Types
 INSERT INTO public.enums(
 	created_at, updated_at, area, name, code)
-	VALUES (NOW(), NOW(), 'Order', 'InitializeUser', 10000)
+	VALUES (NOW(), NOW(), 'Order', 'Initialize User', 10000)
 ON CONFLICT DO NOTHING;
 
 INSERT INTO public.enums(
 	created_at, updated_at, area, name, code)
-	VALUES (NOW(), NOW(), 'Order', 'MarketOrderBuy', 10001)
+	VALUES (NOW(), NOW(), 'Order', 'Market Order', 10001)
 ON CONFLICT DO NOTHING;
 
 INSERT INTO public.enums(
 	created_at, updated_at, area, name, code)
-	VALUES (NOW(), NOW(), 'Order', 'MarketOrderSell', 10002)
+	VALUES (NOW(), NOW(), 'Order', 'Limit Order Buy', 10002)
 ON CONFLICT DO NOTHING;
 
 INSERT INTO public.enums(
 	created_at, updated_at, area, name, code)
-	VALUES (NOW(), NOW(), 'Order', 'LimitOrderBuy', 10003)
+	VALUES (NOW(), NOW(), 'Order', 'Limit Order Sell', 10003)
 ON CONFLICT DO NOTHING;
 
 INSERT INTO public.enums(
 	created_at, updated_at, area, name, code)
-	VALUES (NOW(), NOW(), 'Order', 'LimitOrderSell', 10004)
-ON CONFLICT DO NOTHING;
-
-INSERT INTO public.enums(
-	created_at, updated_at, area, name, code)
-	VALUES (NOW(), NOW(), 'Order', 'StopOrderSell', 10005)
+	VALUES (NOW(), NOW(), 'Order', 'Stop Order Sell', 10004)
 ON CONFLICT DO NOTHING;
 
 -- Insert Asset Types
@@ -50,15 +45,10 @@ ON CONFLICT DO NOTHING;
 
 INSERT INTO public.enums(
 	created_at, updated_at, area, name, code)
-	VALUES (NOW(), NOW(), 'OrderStatus', 'CanceledByUser', 12001)
+	VALUES (NOW(), NOW(), 'OrderStatus', 'Cancelled', 12001)
 ON CONFLICT DO NOTHING;
 
 INSERT INTO public.enums(
 	created_at, updated_at, area, name, code)
-	VALUES (NOW(), NOW(), 'OrderStatus', 'CanceledBySystem', 12002)
-ON CONFLICT DO NOTHING;
-
-INSERT INTO public.enums(
-	created_at, updated_at, area, name, code)
-	VALUES (NOW(), NOW(), 'OrderStatus', 'Executed', 12003)
+	VALUES (NOW(), NOW(), 'OrderStatus', 'Executed', 12002)
 ON CONFLICT DO NOTHING;

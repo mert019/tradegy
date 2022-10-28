@@ -10,8 +10,7 @@ type IOrderManager interface {
 	CreateOrder(order requestmodels.CreateOrderRequest, username string) (dbmodels.Order, error)
 	CreateOrderInfo(userId uint64) responsemodels.CreateOrderInfoResponse
 	GetAllHistory(userId uint) []dbmodels.Order
-	ExecuteMarketOrderBuyOrders()
-	ExecuteMarketOrderSellOrders()
+	ExecuteMarketOrders()
 	ExecuteLimitOrderBuyOrders()
 	ExecuteLimitOrderSellOrders()
 	ExecuteStopOrderSellOrders()

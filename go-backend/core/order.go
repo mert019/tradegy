@@ -113,34 +113,14 @@ func (om *OrderManager) CancelOrder(userId uint, orderId uint) error {
 	}
 
 	// Cancel
-	order.OrderStatusID = enums.CANCELLED_BY_USER
+	order.OrderStatusID = enums.CANCELLED
 
 	_, updateErr := om.orderRepository.InsertUpdateOrder(order)
 	return updateErr
 }
 
-func (om *OrderManager) ExecuteMarketOrderBuyOrders() {
-	orders := om.orderRepository.GetOpenOrdersByOrderType(enums.MARKET_ORDER_BUY)
-	if len(orders) == 0 {
-		return
-	}
-	for _, order := range orders {
-		buyAsset := om.assetRepository.GetByID(order.BuyAssetID)
-		sellAsset := om.assetRepository.GetByID(order.SellAssetID)
-		exchangeRate, err := utils.GetConversionRate(om.cache, buyAsset, sellAsset)
-		if err != nil {
-			continue
-		}
-		amount := order.SellAmount * exchangeRate
-		order.BuyAmount = utils.RoundAmount(amount, 8)
-		order.ExecutionDateTime = time.Now()
-		order.OrderStatusID = enums.EXECUTED
-		om.orderRepository.InsertUpdateOrder(order)
-	}
-}
-
-func (om *OrderManager) ExecuteMarketOrderSellOrders() {
-	orders := om.orderRepository.GetOpenOrdersByOrderType(enums.MARKET_ORDER_SELL)
+func (om *OrderManager) ExecuteMarketOrders() {
+	orders := om.orderRepository.GetOpenOrdersByOrderType(enums.MARKET_ORDER)
 	if len(orders) == 0 {
 		return
 	}
@@ -171,7 +151,7 @@ func (om *OrderManager) ExecuteLimitOrderBuyOrders() {
 		if err != nil {
 			continue
 		}
-		if exchangeRate >= order.Limit {
+		if 1/exchangeRate <= order.Limit {
 			continue
 		}
 		amount := order.SellAmount * exchangeRate
@@ -194,7 +174,7 @@ func (om *OrderManager) ExecuteLimitOrderSellOrders() {
 		if err != nil {
 			continue
 		}
-		if exchangeRate <= order.Limit {
+		if 1/exchangeRate <= order.Limit {
 			continue
 		}
 		amount := order.SellAmount * exchangeRate
@@ -217,7 +197,7 @@ func (om *OrderManager) ExecuteStopOrderSellOrders() {
 		if err != nil {
 			continue
 		}
-		if exchangeRate >= order.Limit {
+		if 1/exchangeRate >= order.Limit {
 			continue
 		}
 		amount := order.SellAmount * exchangeRate

@@ -34,10 +34,10 @@ func NewUserManager(userRepository database.IUserRepository, orderRepository dat
 func (um *UserManager) CreateUser(username string, password string) (dbmodels.User, error) {
 
 	// Validate.
-	if !utils.ValidateStringLength(username, 8, 16) {
+	if !utils.ValidateStringLength(username, 5, 16) {
 		return dbmodels.User{}, customerrors.ErrUsernameLength
 	}
-	if !utils.ValidateStringLength(password, 8, 16) {
+	if !utils.ValidateStringLength(password, 5, 16) {
 		return dbmodels.User{}, customerrors.ErrPasswordLength
 	}
 

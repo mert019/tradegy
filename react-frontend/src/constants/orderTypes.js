@@ -1,23 +1,19 @@
 const orderTypes = [
     {
         "id": 10001,
-        "name": "MarketOrderBuy"
+        "name": "Market Order"
     },
     {
         "id": 10002,
-        "name": "MarketOrderSell"
+        "name": "Limit Order Buy"
     },
     {
         "id": 10003,
-        "name": "LimitOrderBuy"
+        "name": "Limit Order Sell"
     },
     {
         "id": 10004,
-        "name": "LimitOrderSell"
-    },
-    {
-        "id": 10005,
-        "name": "StopOrderSell"
+        "name": "Stop Order Sell"
     },
 ]
 export default orderTypes;

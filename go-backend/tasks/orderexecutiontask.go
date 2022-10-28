@@ -30,7 +30,6 @@ func (oet *OrderExecutionTask) Start() {
 func (oet *OrderExecutionTask) execute() {
 	oet.orderManager.ExecuteLimitOrderBuyOrders()
 	oet.orderManager.ExecuteLimitOrderSellOrders()
-	oet.orderManager.ExecuteMarketOrderBuyOrders()
-	oet.orderManager.ExecuteMarketOrderSellOrders()
+	oet.orderManager.ExecuteMarketOrders()
 	oet.orderManager.ExecuteStopOrderSellOrders()
 }
