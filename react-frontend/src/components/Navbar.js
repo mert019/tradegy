@@ -25,6 +25,7 @@ const Navbar = () => {
   }
 
   return (
+    <>
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
       <div className="container">
         <Link to="/" className="navbar-brand">{process.env.REACT_APP_COMPANY_NAME.toUpperCase()}</Link>
@@ -58,6 +59,8 @@ const Navbar = () => {
         </div>
       </div>
     </nav>
+    <coingecko-coin-price-marquee-widget coin-ids="bitcoin,dogecoin" currency="usd" background-color="#ffffff" locale="en"></coingecko-coin-price-marquee-widget>
+    </>
   )
 }
 

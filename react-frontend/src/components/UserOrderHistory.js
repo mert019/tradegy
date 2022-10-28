@@ -1,58 +1,78 @@
 import { useState } from 'react';
 
-import DataGrid, { Scrolling, Paging, Column, HeaderFilter, Selection } from 'devextreme-react/data-grid';
+// DEVEXTREME
+import DataGrid, { Scrolling, Paging, Column, HeaderFilter, Selection, FilterRow } from 'devextreme-react/data-grid';
+
+// COMPONENTS
+import OrderDetailsPopUp from './OrderDetailsPopUp';
+
+// UTILS
+import { getOrderListStatusBadgeStyle } from '../utils/StyleHelper';
 
 
-import { Popup, Position, ToolbarItem } from 'devextreme-react/popup';
-import { Button } from 'devextreme-react/button';
 
-const UserOrderHistory = ({orderHistory}) => {
+const UserOrderHistory = ({orderHistory, updateData, orderService}) => {
 
 
     const [popUpVisible, setPopUpVisible] = useState(false);
+    const [orderDetails, setOrderDetails] = useState(null);
 
-    const orderHistoryData = [
-        {
-            trade: "BTC/USD",
-            order_type: "Market Order",
-            status: "Executed",
 
-        }
-    ];
-
-    const hidePopup = () => {
-        setPopUpVisible(false);
-      };
-    
-      const renderContent = () => {
-        return (
-            <>
-            <p>Popup content</p>
-            <h1>Cool</h1>
-            <Button text='abc' onClick={() => setPopUpVisible(false)}/>
-            </>
-        );
-    };
-    
     return (
         <>
-        <Popup
-                    title="Order Details"
-                    visible={popUpVisible}
-                    contentRender={renderContent}
-                    onHiding={hidePopup}
-                />
+    
+            <OrderDetailsPopUp
+                visible={popUpVisible}
+                setVisibility={setPopUpVisible} 
+                orderData={orderDetails} 
+                updateData={updateData}
+                orderService={orderService} />
 
+            <DataGrid dataSource={orderHistory} onRowDblClick={(e) => { setOrderDetails(e.data); setPopUpVisible(true); }} height="300px">
 
-            <DataGrid dataSource={orderHistory} onRowDblClick={(e) => setPopUpVisible(true)} height="300px">
+                <HeaderFilter visible={true} />
                 <Selection mode="single" showCheckBoxesMode="none" />
-                {/* <Column dataField={"image_source"} caption="#" alignment="center" width={50} cellRender={(val) => { return val.value.length > 0 ? <><img className="small-asset-img" src={val.value} /></> : <span className="small-asset-img">$</span> }} /> */}
-                {/* <Column dataField="amount" cellRender={(val) => { return <>{val.value.toFixed(6).toLocaleString("en-US")}</> }} /> */}
-                {/* <Column dataField="usd_amount" caption="USD Amount" cellRender={(val) => { return <>$ {val.value.toFixed(2).toLocaleString("en-US")}</> }} /> */}
-                {/* <Column dataField={"order_id"} /> */}
+                <FilterRow visible={true} applyFilter={"onclick"} />
+
+                <Column dataField={"order_id"} caption="ID" alignment={"center"} allowHeaderFiltering={false} allowFiltering={false} allowSorting={true} width={"100px"}/>
+
+                <Column dataField={"buy_asset_code"} 
+                    caption="Buy" 
+                    alignment={"left"} 
+                    cellRender={
+                        (val) => {
+                            return <>
+                                {val.key.buy_asset_image_source.length > 0 ? <><img className="small-asset-img" src={val.key.buy_asset_image_source} /></> : <span className="small-asset-img">$</span>}
+                                <span className="ml-3">{val.value}</span>
+                            </>
+                        }
+                    }/>
+
+                <Column dataField={"sell_asset_code"} 
+                    caption="Sell" 
+                    alignment={"left"} 
+                    cellRender={
+                        (val) => {
+                            return <>
+                                {val.key.sell_asset_image_source.length > 0 ? <><img className="small-asset-img" src={val.key.sell_asset_image_source} /></> : <span className="small-asset-img">$</span>}
+                                <span className="ml-3">{val.value}</span>
+                            </>
+                        }
+                    }/>
+
+                <Column dataField={"order_status"} 
+                    caption="Order Status"
+                    alignment={"center"}
+                    cellRender={
+                        (val) => { return <span className={'status-badge ' + getOrderListStatusBadgeStyle(val.value)}>{val.value}</span> }
+                    } />
+
+                <Column dataField={"order_type"} caption="Order Type" alignment={"center"} />
+
             </DataGrid>
         </>
     )
 }
+
 
 export default UserOrderHistory

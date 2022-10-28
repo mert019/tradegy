@@ -110,6 +110,8 @@ func (o *OrderRepository) GetOrderList(userId uint) []responsemodels.OrderRespon
 			ordertype.name order_type, 
 			buyasset.code buy_asset_code, 
 			sellasset.code sell_asset_code,
+			buyasset.image_source buy_asset_image_source,
+			sellasset.image_source sell_asset_image_source,
 			orderstatus.name as order_status
 		
 		FROM 

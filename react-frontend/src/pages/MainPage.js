@@ -1,7 +1,6 @@
 const MainPage = () => {
   return (
     <>
-      <coingecko-coin-price-marquee-widget coin-ids="bitcoin,dogecoin" currency="usd" background-color="#ffffff" locale="en"></coingecko-coin-price-marquee-widget>
       <div className="mb-4 mt-4">
         <h2 className="text-center">{process.env.REACT_APP_COMPANY_NAME}: Mock Trading Platform</h2>
         <p className="text-center">If you don't have a strategy, trading becomes tragedy.</p>

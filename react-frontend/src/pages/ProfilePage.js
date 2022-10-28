@@ -71,6 +71,7 @@ const ProfilePage = () => {
 
 
   const setOrderHistoryList = async () => {
+    console.log("setOrderHistoryList EXECUTED")
     let response = await orderService.getOrderHistory(token);
     if (response === null) {
       alert.error("Error on order service. Please try a few minites later.");
@@ -88,13 +89,13 @@ const ProfilePage = () => {
     }
   }
 
+  async function initData() {
+    await setWealthInformation();
+    await setOrderHistoryList();
+  }
 
   useEffect(() => {
-    async function initPage() {
-      await setWealthInformation();
-      await setOrderHistoryList();
-    }
-    initPage();
+    initData();
   }, [])
 
 
@@ -108,7 +109,7 @@ const ProfilePage = () => {
           <UserAssetList wealthInfo={wealthInfo} />
         </Item>
         <Item title="Order History">
-          <UserOrderHistory orderHistory={orderHistory}/>
+          <UserOrderHistory orderHistory={orderHistory} updateData={initData} orderService={orderService}/>
         </Item>
       </Accordion>
     </div>

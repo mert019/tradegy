@@ -198,7 +198,7 @@ const CreateOrderPage = () => {
                                             )}
                                         </select>
                                         <div className="mt-3 align-middle p-2">
-                                            {exchangeRate > 0 && "~" + (sellAmount / exchangeRate)}
+                                            {exchangeRate > 0 && "~" + (sellAmount / exchangeRate).toFixed(6).toLocaleString("en-US")}
                                         </div>
                                     </div>
 

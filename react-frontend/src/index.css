@@ -3,14 +3,12 @@ input:focus {
   border-color: #5cb85c !important;
 }
 
-/* 
-#pie {
-    height: 440px;
-  } */
+
 
 #pie * {
   margin: 0 auto;
 }
+
 
 
 .small-asset-img {
@@ -26,4 +24,23 @@ input:focus {
   background-color: #009900;
   border-radius: 50%;
   border: 1px solid #000;
+}
+
+
+
+.status-badge {
+  padding: 4px;
+  border-radius: 4px;
+}
+
+.status-badge-success {
+  background-color: rgb(160, 255, 160);
+}
+
+.status-badge-fail {
+  background-color: rgb(255, 126, 126);
+}
+
+.status-badge-neutral {
+  background-color: rgb(221, 216, 216);
 }
