@@ -31,7 +31,7 @@ func InitializeTasks(cache cache.ICache, assetRepository databaseInterface.IAsse
 
 	leaderboardTask = &LeaderboardTask{
 		done:         done,
-		ticker:       time.NewTicker(12 * time.Hour),
+		ticker:       time.NewTicker(2 * time.Hour),
 		cache:        cache,
 		userManager:  userManager,
 		assetManager: assetManager,

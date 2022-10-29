@@ -48,7 +48,7 @@ func (lbt *LeaderboardTask) execute() {
 
 		wealthInfo, err := lbt.assetManager.GetWealthInformationByUserId(uint64(user.ID))
 		if err != nil {
-			log.Println("LeaderboardTask: error on getting wealth info for username: ", user, ": ", err)
+			log.Println("LeaderboardTask: error on getting wealth info for user id: ", user.ID, ": ", err)
 			continue
 		}
 

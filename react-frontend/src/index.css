@@ -44,3 +44,9 @@ input:focus {
 .status-badge-neutral {
   background-color: rgb(221, 216, 216);
 }
+
+
+
+.main-body{
+  min-height: 80vh;
+}

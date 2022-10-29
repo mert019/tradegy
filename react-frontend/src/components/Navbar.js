@@ -62,7 +62,7 @@ const Navbar = () => {
         </div>
       </div>
     </nav>
-    <coingecko-coin-price-marquee-widget coin-ids="bitcoin,dogecoin" currency="usd" background-color="#ffffff" locale="en"></coingecko-coin-price-marquee-widget>
+    <coingecko-coin-price-marquee-widget coin-ids="bitcoin,dogecoin,tether,solana" currency="usd" background-color="#ffffff" locale="en"></coingecko-coin-price-marquee-widget>
     </>
   )
 }

@@ -13,6 +13,12 @@ const MainPage = () => {
         <div className="mb-3">
           <coingecko-coin-ticker-widget coin-id="dogecoin" currency="usd" locale="en"></coingecko-coin-ticker-widget>
         </div>
+        <div className="mb-3">
+          <coingecko-coin-ticker-widget coin-id="tether" currency="usd" locale="en"></coingecko-coin-ticker-widget>
+        </div>
+        <div className="mb-3">
+          <coingecko-coin-ticker-widget coin-id="solana" currency="usd" locale="en"></coingecko-coin-ticker-widget>
+        </div>
       </div>
     </>
   )

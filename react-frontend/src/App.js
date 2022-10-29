@@ -10,7 +10,9 @@ function App() {
   return (
     <div className="App">
       <Navbar />
-      <Outlet /> 
+      <div className="main-body">
+        <Outlet />
+      </div>
       <Footer />
     </div>
   );

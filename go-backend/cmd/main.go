@@ -12,6 +12,7 @@ import (
 	coreInterfaces "go-backend/interfaces/core"
 	cacheInterface "go-backend/interfaces/ports/cache"
 	databaseInterface "go-backend/interfaces/ports/database"
+	"go-backend/middlewares"
 	"go-backend/tasks"
 	"log"
 	"net/http"
@@ -62,6 +63,9 @@ func init() {
 
 	// Initialize Router
 	router = mux.NewRouter()
+
+	// Add router middlewares
+	router.Use(middlewares.RequestLogMiddleware)
 
 	// Initialize Repositories
 	database.InitRepositoryPackage()

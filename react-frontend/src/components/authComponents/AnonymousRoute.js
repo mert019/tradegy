@@ -14,7 +14,9 @@ const AnonymousRoute = () => {
   return (token.length === 0 ?
     <>
       <Navbar />
-      <Outlet />
+      <div className="main-body">
+        <Outlet />
+      </div>
       <Footer />
     </> :
     <Navigate to="/" replace />)

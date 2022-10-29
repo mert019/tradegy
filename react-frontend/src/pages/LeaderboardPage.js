@@ -56,7 +56,7 @@ const LeaderboardPage = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {leaderboardData !== null &&
+                    {leaderboardData !== null && leaderboardData.leaderboard_items !== null &&
                         leaderboardData.leaderboard_items.map((val, index) => {
                             return <tr key={"leaderboardData_" + index}>
                                 <th scope="row" className="text-left">{index + 1}</th>
