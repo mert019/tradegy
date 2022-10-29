@@ -14,8 +14,27 @@ services:
     volumes:
       - db:/var/lib/postgresql/data
       - ./database/postgres:/docker-entrypoint-initdb.d
+    depends_on:
+      - redis
       
   redis:
     image: redis:7.0.4
     ports:
       - 8003:6379
+
+  api-service:
+    image: tradegy-api:latest
+    ports:
+      - 8080:8080
+    volumes:
+      - ./go-backend/config:/app/config
+    depends_on:
+      - frontend-service
+
+  frontend-service:
+    image: tradegy-frontend:latest
+    ports:
+      - 3000:3000
+    depends_on:
+      - postgres
+    
