@@ -35,6 +35,8 @@ services:
     image: tradegy-frontend:latest
     ports:
       - 3000:3000
+    volumes:
+      - ./react-frontend/.env:/app/.env
     depends_on:
       - postgres
     

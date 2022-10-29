@@ -15,7 +15,7 @@ func (co *CreateOrderRequest) Validate() string {
 	if co.Amount <= 0 {
 		msg += "Amount must be a positive number. "
 	}
-	if co.OrderTypeID < 10000 || co.OrderTypeID > 10005 {
+	if co.OrderTypeID < 10001 || co.OrderTypeID > 10004 {
 		msg += "Invalid order type ID. "
 	}
 	if co.BuyAssetID <= 0 {

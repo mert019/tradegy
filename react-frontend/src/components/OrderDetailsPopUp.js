@@ -15,7 +15,7 @@ const OrderDetailsPopUp = ({visible, setVisibility, orderData, updateData, order
 
     const isOrderOpen = orderData !== null ? orderData.order_status === "Open" : false;
     const isOrderExecuted  = orderData !== null ? orderData.order_status === "Executed" : false;
-    const isOrderUseLimit = orderData !== null ? !orderData.order_type.includes("MarketOrder") : false;
+    const isOrderUseLimit = orderData !== null ? !orderData.order_type.includes("Market Order") : false;
 
     const renderContent = () => {
         return (
